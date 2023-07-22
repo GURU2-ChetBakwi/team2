@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.chetbakwi'
+    namespace 'com.guru2.chetbakwi'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.chetbakwi"
+        applicationId "com.guru2.chetbakwi"
         minSdk 21
         targetSdk 33
         versionCode 1
