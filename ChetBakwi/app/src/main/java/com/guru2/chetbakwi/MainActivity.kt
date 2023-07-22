@@ -30,9 +30,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    // pdf를 uri 형태로 저장할 변수
+    private var selectedPdfUri: Uri? = null
 
     // pdf 파일 로컬에서 찾아오는 버튼
     lateinit var btnUpload: Button
+    // 저장된 pdf 파일을 열어보는 버튼
+    lateinit var btnOpen: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +79,20 @@ class MainActivity : AppCompatActivity() {
 
         // pdf 파일 로컬에서 찾아오는 버튼
         btnUpload = findViewById<Button>(R.id.btnUpload)
+        // uri 로 저장된 pdf 파일을 열어보는 버튼
+        btnOpen = findViewById<Button>(R.id.btnOpen)
 
         // pdf 파일 찾아오는 버튼 클릭 시
         btnUpload.setOnClickListener {
             // 로컬 파일 내에서 원하는 pdf 파일 선택하면 파일의 경로 반환
             openFilePicker()
+        }
+
+        // pdf 파일을 여는 버튼 클릭 시
+        btnOpen.setOnClickListener {
+            selectedPdfUri?.let {
+                openPdfFile(it)
+            }
         }
     }
 
@@ -103,6 +116,9 @@ class MainActivity : AppCompatActivity() {
         // 제대로 pdf 선택되었는지 확인용 print문
         //println(displayName)
         //println(pdfPath)
+
+        // pdf를 Uri 타입 변수에 저장
+        selectedPdfUri = uri
     }
 
     // 파일의 경로와 이름을 가져오기 위한 함수
@@ -118,5 +134,16 @@ class MainActivity : AppCompatActivity() {
         }
         // 파일 이름에 null을 반환할 수 있으므로 null 처리를 고려하여 null 반환하기
         return null
+    }
+
+    // pdf 파일을 열어보는 함수
+    private fun openPdfFile(uri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/pdf")
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        }
+
+        // PDF 뷰어 앱을 호출하여 선택한 PDF 파일 열기
+        startActivity(intent)
     }
 }
