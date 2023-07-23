@@ -8,16 +8,31 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Log
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_READ_EXTERNAL_STORAGE = 1000
 
+    // Firebase Storage 인스턴스 가져오기
+    private val storage = Firebase.storage
+    private val storageReference = storage.reference
+
+    // pdf를 uri 형태로 저장할 변수
+    private var selectedPdfUri: Uri? = null
     // 파일 선택 액티비티의 결과 처리
     private val pdfPicker =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -25,13 +40,9 @@ class MainActivity : AppCompatActivity() {
                 // 사용자가 파일을 선택하고 결과가 OK인 경우, 선택한 파일의 URI를 가져오기
                 val uri = result.data?.data
                 // 선택한 파일의 URI를 사용하여 처리 함수 호출
-                uri?.let {
-                    handleSelectedFile(it)
-                }
+                selectedPdfUri = uri
             }
         }
-    // pdf를 uri 형태로 저장할 변수
-    private var selectedPdfUri: Uri? = null
 
     // pdf 파일 로컬에서 찾아오는 버튼
     lateinit var btnUpload: Button
@@ -41,6 +52,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // firebase 초기화
+        FirebaseApp.initializeApp(this)
 
         // 권한 허용 여부 확인
         if (ContextCompat.checkSelfPermission(
@@ -90,12 +104,15 @@ class MainActivity : AppCompatActivity() {
 
         // pdf 파일을 여는 버튼 클릭 시
         btnOpen.setOnClickListener {
-            //selectedPdfUri?.let {
-                // openPdfFile(it)
-            //}
+
             val intent = Intent(this, pdfViewPage::class.java)
             intent.data = selectedPdfUri
+
+            // pdfViewPage로 넘어가기
             startActivity(intent)
+
+            // firebase 에 저장 --------------------------------------------------------------->> 기능상 btnUpload.setOnClickListener로 옮겨야 할 함수
+            uploadPDFToFirebaseStorage(selectedPdfUri!!)
         }
     }
 
@@ -108,20 +125,6 @@ class MainActivity : AppCompatActivity() {
             type = "application/pdf"
         }
         pdfPicker.launch(intent)
-    }
-
-    private fun handleSelectedFile(uri: Uri) {
-        // 선택된 파일 URI를 사용하여 파일의 이름 가져오기
-        val displayName = getFileName(uri)
-        // 선택된 파일 URI를 사용하여 실제 경로 가져오기
-        val pdfPath = uri.toString()
-
-        // 제대로 pdf 선택되었는지 확인용 print문
-        //println(displayName)
-        //println(pdfPath)
-
-        // pdf를 Uri 타입 변수에 저장
-        selectedPdfUri = uri
     }
 
     // 파일의 경로와 이름을 가져오기 위한 함수
@@ -139,14 +142,20 @@ class MainActivity : AppCompatActivity() {
         return null
     }
 
-    // pdf 파일을 열어보는 함수
-    private fun openPdfFile(uri: Uri) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(uri, "application/pdf")
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        }
+    // firebase 에 pdf upload 하는 함수
+    private fun uploadPDFToFirebaseStorage (uri: Uri) {
+        // firebase storage upload path setting
+        // 선택된 파일 URI를 사용하여 파일의 이름 가져오기
+        val fileName = getFileName(uri)
+        val pdfRef: StorageReference = storageReference.child("uploadedPDF/$fileName")
 
-        // PDF 뷰어 앱을 호출하여 선택한 PDF 파일 열기
-        startActivity(intent)
+        // firebase storage에 저장
+        pdfRef.putFile(uri)
+            .addOnSuccessListener {
+                Log.d("uploadPDFToFirebaseStorage", "PDF 업로드 성공")
+            }
+            .addOnFailureListener { exception ->
+                Log.d("uploadPDFToFirebaseStorage", "PDF 업로드 실패 : $exception")
+            }
     }
 }
