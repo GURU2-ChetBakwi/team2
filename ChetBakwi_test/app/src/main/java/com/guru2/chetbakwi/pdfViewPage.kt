@@ -8,7 +8,9 @@ import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
@@ -20,11 +22,20 @@ class pdfViewPage : AppCompatActivity() {
     private lateinit var pdfFile: File
     private lateinit var currentPage: PdfRenderer.Page
 
+    // 추가
+    private lateinit var btnPrev: Button
+    private lateinit var btnNext: Button
+    private var currentPageIndex: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdfview)
 
         imageView = findViewById(R.id.imageView)
+
+        //추가
+        btnPrev = findViewById(R.id.btnPrev)
+        btnNext = findViewById(R.id.btnNext)
 
         // pdfUri 전달받기
         val pdfUri: Uri = intent.data!!
@@ -63,6 +74,17 @@ class pdfViewPage : AppCompatActivity() {
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
         }
+
+        //추가
+        // 이전 페이지 버튼 클릭 리스너
+        btnPrev.setOnClickListener {
+            showPreviousPage()
+        }
+
+        // 다음 페이지 버튼 클릭 리스너
+        btnNext.setOnClickListener {
+            showNextPage()
+        }
     }
 
     private fun openRenderer() {
@@ -84,6 +106,29 @@ class pdfViewPage : AppCompatActivity() {
         val bitmap = Bitmap.createBitmap(currentPage.width, currentPage.height, Bitmap.Config.ARGB_8888)
         currentPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
         imageView.setImageBitmap(bitmap)
+    }
+
+    //추가
+    // 이전 페이지 보이기
+    private fun showPreviousPage() {
+        if (currentPageIndex > 0) {
+            currentPageIndex--
+            showPage(currentPageIndex)
+        } else {
+            // 첫 페이지이므로 이전 페이지 없음을 알림
+            Toast.makeText(this, "첫 페이지입니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // 다음 페이지 보이기
+    private fun showNextPage() {
+        if (currentPageIndex < pdfRenderer.pageCount - 1) {
+            currentPageIndex++
+            showPage(currentPageIndex)
+        } else {
+            // 마지막 페이지이므로 다음 페이지 없음을 알림
+            Toast.makeText(this, "마지막 페이지입니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroy() {
