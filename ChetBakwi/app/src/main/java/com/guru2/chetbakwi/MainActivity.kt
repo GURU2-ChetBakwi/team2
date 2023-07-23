@@ -90,9 +90,12 @@ class MainActivity : AppCompatActivity() {
 
         // pdf 파일을 여는 버튼 클릭 시
         btnOpen.setOnClickListener {
-            selectedPdfUri?.let {
-                openPdfFile(it)
-            }
+            //selectedPdfUri?.let {
+                // openPdfFile(it)
+            //}
+            val intent = Intent(this, pdfViewPage::class.java)
+            intent.data = selectedPdfUri
+            startActivity(intent)
         }
     }
 

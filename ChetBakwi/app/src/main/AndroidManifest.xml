@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 추가가 필요한 코드 / 화면 전환에 필요 -->
+        <activity android:name=".pdfViewPage"/>
     </application>
 
 </manifest>
