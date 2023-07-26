@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
@@ -36,8 +37,10 @@ class pdfViewPage : AppCompatActivity() {
     // 추가
     private lateinit var btnPrev: Button
     private lateinit var btnNext: Button
+    private lateinit var pdfPageNumber: TextView
     private var currentPageIndex: Int = 0
     private lateinit var tesseract: TessBaseAPI
+
 
     // 단어 좌표 정보를 담을 데이터 클래스
     data class WordCoordinates(
@@ -57,6 +60,7 @@ class pdfViewPage : AppCompatActivity() {
         //추가
         btnPrev = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
+        pdfPageNumber = findViewById(R.id.pdfPageNumber)
 
         // tesseract 초기화
         initTesseract()
@@ -132,6 +136,9 @@ class pdfViewPage : AppCompatActivity() {
         val bitmap = Bitmap.createBitmap(currentPage.width, currentPage.height, Bitmap.Config.ARGB_8888)
         currentPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
         imageView.setImageBitmap(bitmap)
+
+        // 현재 페이지 번호 업데이트
+        pdfPageNumber.text = "${index + 1}/${pdfRenderer.pageCount}"
     }
 
     //추가
