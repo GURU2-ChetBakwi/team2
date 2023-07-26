@@ -39,6 +39,15 @@ class pdfViewPage : AppCompatActivity() {
     private var currentPageIndex: Int = 0
     private lateinit var tesseract: TessBaseAPI
 
+    // 단어 좌표 정보를 담을 데이터 클래스
+    data class WordCoordinates(
+        val text: String,
+        val left: Int,
+        val top: Int,
+        val right: Int,
+        val bottom: Int
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdfview)
@@ -75,8 +84,9 @@ class pdfViewPage : AppCompatActivity() {
 
             // 첫 번째 페이지를 보여주기
             showPage(0)
+            processOcrForCurrentPage()
 
-            extractTextFromPDF(pdfUri)
+            //extractTextFromPDF(pdfUri)
         } else {
             // pdfUri 를 제대로 전달받지 못했다면 파일을 다시 선택하라는 alertDialog 띄우기
             val alertDialogBuilder = AlertDialog.Builder(this)
@@ -130,6 +140,7 @@ class pdfViewPage : AppCompatActivity() {
         if (currentPageIndex > 0) {
             currentPageIndex--
             showPage(currentPageIndex)
+            processOcrForCurrentPage()
         } else {
             // 첫 페이지이므로 이전 페이지 없음을 알림
             Toast.makeText(this, "첫 페이지입니다.", Toast.LENGTH_SHORT).show()
@@ -141,6 +152,7 @@ class pdfViewPage : AppCompatActivity() {
         if (currentPageIndex < pdfRenderer.pageCount - 1) {
             currentPageIndex++
             showPage(currentPageIndex)
+            processOcrForCurrentPage()
         } else {
             // 마지막 페이지이므로 다음 페이지 없음을 알림
             Toast.makeText(this, "마지막 페이지입니다.", Toast.LENGTH_SHORT).show()
@@ -162,6 +174,7 @@ class pdfViewPage : AppCompatActivity() {
         tesseract.init(cacheDir.absolutePath, "kor+eng")
     }
 
+    // pdf의 모든 페이지에 있는 텍스트 추출
     private fun extractTextFromPDF(pdfUri: Uri) {
         GlobalScope.launch(Dispatchers.IO) {
             val pdfText = withContext(Dispatchers.IO) {
@@ -197,6 +210,56 @@ class pdfViewPage : AppCompatActivity() {
             // 추출된 pdfText print
             println(pdfText)
         }
+    }
+
+    // 현재 보이고 있는 페이지에서 텍스트 추출
+    private fun processOcrForCurrentPage() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val pageText = withContext(Dispatchers.IO) {
+                tesseractOCR(currentPage)
+            }
+            // 추출된 텍스트를 이용해 필요한 처리 ------------------------------------------------- 생략 가능
+            println(pageText)
+        }
+
+        // 현재 페이지 내의 모든 단어들의 좌표 정보를 얻기 위한 변수
+        /*val wordCoordinates = mutableListOf<WordCoordinates>()
+
+        val iterator = tesseract.resultIterator
+        iterator.begin()
+        val level = TessBaseAPI.PageIteratorLevel.RIL_WORD
+
+        do {
+            val wordBoundingBox = iterator.getBoundingBox(level)
+            val wordText = iterator.getUTF8Text(level) // Corrected property name
+
+            // 단어가 있는 경우에만 좌표 정보를 얻어옴
+            if (wordText != null && wordBoundingBox != null) {
+                val left = wordBoundingBox.left
+                val top = wordBoundingBox.top
+                val right = wordBoundingBox.right
+                val bottom = wordBoundingBox.bottom
+
+                val wordCoordinates = WordCoordinates(
+                    wordText,
+                    left,
+                    top,
+                    right,
+                    bottom
+                )
+                wordCoordinates.add(wordCoordinates)
+            }
+        } while (iterator.next(level))
+
+        // 추출된 모든 단어들의 좌표 정보 출력 또는 원하는 처리 수행
+        for (wordCoordinate in wordCoordinates) {
+            println("Word: ${wordCoordinate.text}")
+            println("Left: ${wordCoordinate.left}")
+            println("Top: ${wordCoordinate.top}")
+            println("Right: ${wordCoordinate.right}")
+            println("Bottom: ${wordCoordinate.bottom}")
+            println("------------------")
+        }*/
     }
 
     private fun tesseractOCR(page: PdfRenderer.Page): String {

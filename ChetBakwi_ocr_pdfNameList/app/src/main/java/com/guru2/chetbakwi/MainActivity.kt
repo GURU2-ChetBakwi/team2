@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val storage = Firebase.storage
     private val storageReference = storage.reference
 
-    //pdf 파일이름과 Uri 리스트, pdf 개수, 파일이름 !!!
+    //pdf 파일이름과 Uri 리스트, pdf 개수 !!!
     var pdfList = arrayListOf<String>()
     var pdfUriList = arrayListOf<Uri>()
     var pdfCount = 0
@@ -50,8 +50,8 @@ class MainActivity : AppCompatActivity() {
                 // 선택한 파일의 URI를 사용하여 처리 함수 호출
                 selectedPdfUri = uri
 
+                //pdf 버튼 이름변경 !!!
                 updatePdfFile(uri!!)
-
             }
         }
 
@@ -118,7 +118,8 @@ class MainActivity : AppCompatActivity() {
         btnUpload = findViewById<Button>(R.id.btnUpload)
         // uri 로 저장된 pdf 파일을 열어보는 버튼
         btnOpen = findViewById<Button>(R.id.btnOpen)
-        //pdf1 파일이름 버튼 !!!
+
+        //pdf 파일이름 버튼 !!!
         btnPdf1 = findViewById(R.id.pdfBtn1)
         btnPdf2 = findViewById(R.id.pdfBtn2)
         btnPdf3 = findViewById(R.id.pdfBtn3)
@@ -131,33 +132,39 @@ class MainActivity : AppCompatActivity() {
 
         // pdf 파일을 여는 버튼 클릭 시
         btnOpen.setOnClickListener {
+            //리스트 확인 코드
+            Log.e("!!!pdf",pdfList.toString())
+            Log.e("!!!pdfUri",pdfUriList.toString())
 
-            val intent = Intent(this, pdfViewPage::class.java)
-            intent.data = selectedPdfUri
-
-            // pdfViewPage로 넘어가기
-            startActivity(intent)
+            pdfViewOpen(selectedPdfUri!!)
 
             // firebase 에 저장 --------------------------------------------------------------->> 기능상 btnUpload.setOnClickListener로 옮겨야 할 함수
             uploadPDFToFirebaseStorage(selectedPdfUri!!)
         }
 
-        //버튼누르면 파일이름에 해당하는 열기
+        //버튼누르면 파일이름에 해당하는 열기 !!!
         btnPdf1.setOnClickListener {
-            if (pdfList[0] != "1") {
-                downloadPDFToFirebaseStorage(pdfUriList[0]!!)
+            val pdfs = 0
+            if(pdfList[pdfs]!="1"){
+                downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                pdfViewOpen(pdfUriList[pdfs])
             }
         }
         btnPdf2.setOnClickListener {
-            if(pdfList[1]!="1"){
-                downloadPDFToFirebaseStorage(pdfUriList[1]!!)
+            val pdfs = 1
+            if(pdfList[pdfs]!="1"){
+                downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                pdfViewOpen(pdfUriList[pdfs])
             }
         }
         btnPdf3.setOnClickListener {
-            if(pdfList[2]!="1"){
-                downloadPDFToFirebaseStorage(pdfUriList[2]!!)
+            val pdfs = 2
+            if(pdfList[pdfs]!="1"){
+                downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                pdfViewOpen(pdfUriList[pdfs])
             }
         }
+
     }
 
     // pdf 파일을 선택하는 함수
@@ -215,16 +222,16 @@ class MainActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d("downloadPDFToFirebaseStorage", "PDF 다운로드 실패 : $exception")
             }
-        //pdf 띄우기
+
         val intent = Intent(this, pdfViewPage::class.java)
         intent.data = uri
 
         // pdfViewPage로 넘어가기
         startActivity(intent)
     }
-    //pdf 버튼 이름 변경하는 함수
+
+    //pdf 버튼 파일이름 바꾸는 함수 !!!
     fun updatePdfFile(uri : Uri){
-        //pdf1 버튼1 파일이름 변경 !!!
         pdfUriList.set(pdfCount, uri!!) //Uri저장 set(0,"")
         tempName = getFileName(pdfUriList[pdfCount]!!).toString()
         pdfList.set(pdfCount, tempName) //파일이름저장
@@ -238,6 +245,15 @@ class MainActivity : AppCompatActivity() {
             btnPdf3.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
             pdfCount = 0
         }
+    }
+
+    //해당 Uri를 pdfViewPage로 화면에 띄우는 함수 !!!
+    fun pdfViewOpen(uri: Uri)  {
+        val intent = Intent(this, pdfViewPage::class.java)
+        intent.data = uri
+
+        // pdfViewPage로 넘어가기
+        startActivity(intent)
     }
 
 }
