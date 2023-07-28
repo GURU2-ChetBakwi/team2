@@ -24,31 +24,6 @@ class PdfViewOcr : AppCompatActivity() {
     // 랜덤 빈칸 생성 버튼
     private lateinit var btnRandomBlank: Button
 
-    // 클릭 가능한 링크 업데이트하는 함수
-    private fun updateClickableLinks(indices: List<Int>) {
-        // 업데이트된 텍스트에서 새로운 단어들을 찾아서 클릭 가능한 링크를 설정
-        val regex = "\\w+".toRegex()
-        val matches = regex.findAll(updatedSpannableString.toString())
-
-        for ((i, match) in matches.withIndex()) {
-            if (i in indices) {
-                val newWord = match.value
-                val newStartIndex = match.range.first
-                val newEndIndex = match.range.last + 1
-
-                // 클릭 가능한 링크를 만들기 위한 ClickableSpan 생성
-                val clickableSpan = object : ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        // 단어를 클릭하면 토글 함수 호출하여 단어를 바꿈
-                        toggleWord(widget as TextView, newWord, newStartIndex, newEndIndex)
-                    }
-                }
-                // 클릭 가능한 링크를 해당 단어에 적용
-                updatedSpannableString.setSpan(clickableSpan, newStartIndex, newEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdfocr)
@@ -59,6 +34,39 @@ class PdfViewOcr : AppCompatActivity() {
 
         // 초기 텍스트 설정
         originalSpannableString = SpannableString(text)
+
+        // 클릭 가능한 링크를 생성하는 SpannableString 생성
+        updatedSpannableString = SpannableString(text)
+
+        // 한 개 이상의 문자로 이루어진 단어 찾기 (정규식 패턴)
+        val regex = "\\w+".toRegex()
+        val matches = regex.findAll(text)
+        println(matches)
+
+        // 각 단어를 클릭 가능한 링크로 설정하기
+        for (match in matches) {
+            val word = match.value
+            val startIndex = match.range.first
+            val endIndex = match.range.last + 1
+
+            // 클릭 가능한 링크를 만들기 위한 ClickableSpan 생성
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    // 단어를 클릭하면 토글 함수 호출하여 단어를 바꾸기
+                    toggleWord(widget as TextView, word, startIndex, endIndex)
+                }
+                override fun updateDrawState(ds: TextPaint) {
+                    // 클릭 가능한 링크의 스타일을 설정합니다.
+                    ds.isUnderlineText = false // 밑줄 제거
+                    ds.color = Color.BLACK // 클릭 가능한 링크의 색상을 파란색으로 설정
+                }
+            }
+            // 클릭 가능한 링크를 해당 단어에 적용
+            updatedSpannableString.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+        // 텍스트뷰에 클릭 가능한 링크가 포함된 SpannableString 설정
+        textView.movementMethod = LinkMovementMethod.getInstance()
+        textView.text = updatedSpannableString
 
         // '랜덤 빈칸 만들기' 버튼 클릭 리스너 설정
         btnRandomBlank.setOnClickListener {
@@ -75,36 +83,36 @@ class PdfViewOcr : AppCompatActivity() {
             // 선택된 단어들을 _로 대체하여 업데이트된 SpannableString 생성
             updatedSpannableString = replaceWordsWithUnderscore(updatedSpannableString, wordsIndices)
 
-            // 텍스트뷰에 업데이트된 SpannableString 설정
+            // 한 개 이상의 문자로 이루어진 단어 찾기 (정규식 패턴)
+            val regex = "\\w+".toRegex()
+            val matches = regex.findAll(text)
+            println(matches)
+
+            // 각 단어를 클릭 가능한 링크로 설정하기
+            for (match in matches) {
+                val word = match.value
+                val startIndex = match.range.first
+                val endIndex = match.range.last + 1
+
+                // 클릭 가능한 링크를 만들기 위한 ClickableSpan 생성
+                val clickableSpan = object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        // 단어를 클릭하면 토글 함수 호출하여 단어를 바꾸기
+                        toggleWord(widget as TextView, word, startIndex, endIndex)
+                    }
+                    override fun updateDrawState(ds: TextPaint) {
+                        // 클릭 가능한 링크의 스타일을 설정합니다.
+                        ds.isUnderlineText = false // 밑줄 제거
+                        ds.color = Color.BLACK // 클릭 가능한 링크의 색상을 파란색으로 설정
+                    }
+                }
+                // 클릭 가능한 링크를 해당 단어에 적용
+                updatedSpannableString.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            // 텍스트뷰에 클릭 가능한 링크가 포함된 SpannableString 설정
+            textView.movementMethod = LinkMovementMethod.getInstance()
             textView.text = updatedSpannableString
         }
-
-        // 클릭 가능한 링크를 생성하는 SpannableString 생성
-        updatedSpannableString = SpannableString(text)
-
-        // 한 개 이상의 문자로 이루어진 단어 찾기 (정규식 패턴)
-        val regex = "\\w+".toRegex()
-        val matches = regex.findAll(text)
-
-        // 각 단어를 클릭 가능한 링크로 설정하기
-        for (match in matches) {
-            val word = match.value
-            val startIndex = match.range.first
-            val endIndex = match.range.last + 1
-
-            // 클릭 가능한 링크를 만들기 위한 ClickableSpan 생성
-            val clickableSpan = object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    // 단어를 클릭하면 토글 함수 호출하여 단어를 바꾸기
-                    toggleWord(widget as TextView, word, startIndex, endIndex)
-                }
-            }
-            // 클릭 가능한 링크를 해당 단어에 적용
-            updatedSpannableString.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        }
-        // 텍스트뷰에 클릭 가능한 링크가 포함된 SpannableString 설정
-        textView.movementMethod = LinkMovementMethod.getInstance()
-        textView.text = updatedSpannableString
     }
 
     // 단어를 클릭하여 토글하는 함수
@@ -134,6 +142,11 @@ class PdfViewOcr : AppCompatActivity() {
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(widget: View) {
                     toggleWord(widget as TextView, newWord, newStartIndex, newEndIndex)
+                }
+                override fun updateDrawState(ds: TextPaint) {
+                    // 클릭 가능한 링크의 스타일을 설정합니다.
+                    ds.isUnderlineText = false // 밑줄 제거
+                    ds.color = Color.BLACK // 클릭 가능한 링크의 색상을 파란색으로 설정
                 }
             }
             // 클릭 가능한 링크를 해당 단어에 적용
