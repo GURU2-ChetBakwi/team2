@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "569561439437",
+    "project_id": "chetbakwi",
+    "storage_bucket": "chetbakwi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569561439437:android:90cb4d88bc2efc878b5d84",
+        "android_client_info": {
+          "package_name": "com.guru2.chetbakwi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569561439437-l7ak9rd5hfuocg4t503f7hpdr5k88hva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYs-7M9g047aDrDZBJcbn8pCAlbraDVco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569561439437-l7ak9rd5hfuocg4t503f7hpdr5k88hva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
