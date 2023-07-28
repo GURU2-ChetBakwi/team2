@@ -249,13 +249,10 @@ class MainActivity : AppCompatActivity() {
 
     //해당 Uri를 pdfViewPage로 화면에 띄우는 함수 !!!
     fun pdfViewOpen(uri: Uri)  {
-        val intent = Intent(this, pdfViewPage::class.java)
+        val intent = Intent(this, PdfViewPageForOcr::class.java)
         intent.data = uri
 
-
-        print("")
         // pdfViewPage로 넘어가기
         startActivity(intent)
     }
-
 }

@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 
-class pdfViewPage : AppCompatActivity() {
+class PdfViewPageForOcr : AppCompatActivity() {
 
     private lateinit var pdfRenderer: PdfRenderer
     private lateinit var imageView: ImageView
@@ -36,7 +36,7 @@ class pdfViewPage : AppCompatActivity() {
     private lateinit var pdfPageNumber: TextView
     private var currentPageIndex: Int = 0
     private lateinit var tesseract: TessBaseAPI
-
+    private lateinit var btnToOcr: Button
 
     // 단어 좌표 정보를 담을 데이터 클래스
     data class WordCoordinates(
@@ -57,6 +57,7 @@ class pdfViewPage : AppCompatActivity() {
         btnPrev = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
         pdfPageNumber = findViewById(R.id.pdfPageNumber)
+        btnToOcr = findViewById(R.id.btnToOcr)
 
         // tesseract 초기화
         initTesseract()
@@ -222,12 +223,14 @@ class pdfViewPage : AppCompatActivity() {
                 tesseractOCR(currentPage)
             }
             // 추출된 텍스트를 이용해 필요한 처리 ------------------------------------------------- 생략 가능
-            println(pageText)
+            //println(pageText)
 
-            //intent ocr 결과 주기
-            val intent = Intent(this@pdfViewPage, PdfViewOcr::class.java)
-            intent.putExtra("textOCR", pageText)
-            startActivity(intent)
+            btnToOcr.setOnClickListener {
+                //intent ocr 결과 주기
+                val intent = Intent(this@PdfViewPageForOcr, PdfViewOcr::class.java)
+                intent.putExtra("textOCR", pageText)
+                startActivity(intent)
+            }
         }
     }
 

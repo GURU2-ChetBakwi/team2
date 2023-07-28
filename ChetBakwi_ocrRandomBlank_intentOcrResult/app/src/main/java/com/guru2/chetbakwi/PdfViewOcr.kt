@@ -22,6 +22,9 @@ class PdfViewOcr : AppCompatActivity() {
     //val text = "Hello, my name is LeeSeohyun!\nWhat's your name?\nMy name is Sarah.\nNice to meet you."
 
 
+    // pdf 보기 버튼 생성
+    private lateinit var btnToPdf : Button
+
     // 랜덤 빈칸 생성 버튼
     private lateinit var btnRandomBlank: Button
 
@@ -32,11 +35,10 @@ class PdfViewOcr : AppCompatActivity() {
         //intent ocr결과 넘겨받기
         text = intent.getStringExtra("textOCR")!!
 
-
-
         // 레이아웃에서 TextView와 Button을 찾기
         val textView = findViewById<TextView>(R.id.ocrTextView)
         btnRandomBlank = findViewById(R.id.btnRandomBlank)
+        btnToPdf = findViewById(R.id.btnToPdf)
 
         // 초기 텍스트 설정
         originalSpannableString = SpannableString(text)
@@ -72,6 +74,11 @@ class PdfViewOcr : AppCompatActivity() {
         // 텍스트뷰에 클릭 가능한 링크가 포함된 SpannableString 설정
         textView.movementMethod = LinkMovementMethod.getInstance()
         textView.text = updatedSpannableString
+
+        // pdf 페이지 보기 버튼 클릭 리스너 설정
+        btnToPdf.setOnClickListener {
+            finish()
+        }
 
         // '랜덤 빈칸 만들기' 버튼 클릭 리스너 설정
         btnRandomBlank.setOnClickListener {
