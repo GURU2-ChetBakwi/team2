@@ -41,7 +41,6 @@ class PdfViewOcr : AppCompatActivity() {
         // 한 개 이상의 문자로 이루어진 단어 찾기 (정규식 패턴)
         val regex = "\\w+".toRegex()
         val matches = regex.findAll(text)
-        println(matches)
 
         // 각 단어를 클릭 가능한 링크로 설정하기
         for (match in matches) {
@@ -86,7 +85,6 @@ class PdfViewOcr : AppCompatActivity() {
             // 한 개 이상의 문자로 이루어진 단어 찾기 (정규식 패턴)
             val regex = "\\w+".toRegex()
             val matches = regex.findAll(text)
-            println(matches)
 
             // 각 단어를 클릭 가능한 링크로 설정하기
             for (match in matches) {
