@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -123,6 +124,11 @@ class MainActivity : AppCompatActivity() {
         btnPdf1 = findViewById(R.id.pdfBtn1)
         btnPdf2 = findViewById(R.id.pdfBtn2)
         btnPdf3 = findViewById(R.id.pdfBtn3)
+        //처음에는 안보이게 !!!
+        btnPdf1.setVisibility(View.INVISIBLE)
+        btnPdf2.setVisibility(View.INVISIBLE)
+        btnPdf3.setVisibility(View.INVISIBLE)
+
 
         // pdf 파일 찾아오는 버튼 클릭 시
         btnUpload.setOnClickListener {
@@ -238,12 +244,15 @@ class MainActivity : AppCompatActivity() {
         if(pdfCount==0){
             btnPdf1.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
             pdfCount ++
+            btnPdf1.setVisibility(View.VISIBLE)
         }else if(pdfCount==1){
             btnPdf2.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
             pdfCount ++
+            btnPdf2.setVisibility(View.VISIBLE)
         }else if(pdfCount==2){
             btnPdf3.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
             pdfCount = 0
+            btnPdf3.setVisibility(View.VISIBLE)
         }
     }
 
