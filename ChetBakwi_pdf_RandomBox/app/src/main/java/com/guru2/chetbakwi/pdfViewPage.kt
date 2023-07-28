@@ -45,21 +45,9 @@ class pdfViewPage : AppCompatActivity() {
     private var currentPageIndex: Int = 0
     private lateinit var tesseract: TessBaseAPI
 
-
-    // 단어 좌표 정보를 담을 데이터 클래스
-    data class WordCoordinates(
-        val text: String,
-        val left: Int,
-        val top: Int,
-        val right: Int,
-        val bottom: Int
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdfview)
-
-        // imageView = findViewById(R.id.imageView)
 
         //추가
         btnPrev = findViewById(R.id.btnPrev)
