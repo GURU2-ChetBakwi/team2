@@ -137,7 +137,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("!!!pdfUri",pdfUriList.toString())
 
             pdfViewOpen(selectedPdfUri!!)
-            pdfViewOcrOepn(selectedPdfUri!!)
 
             // firebase 에 저장 --------------------------------------------------------------->> 기능상 btnUpload.setOnClickListener로 옮겨야 할 함수
             uploadPDFToFirebaseStorage(selectedPdfUri!!)
@@ -258,12 +257,4 @@ class MainActivity : AppCompatActivity() {
         // pdfViewPage로 넘어가기
         startActivity(intent)
     }
-
-    fun pdfViewOcrOepn(uri: Uri) {
-        val intent = Intent(this, PdfViewOcr::class.java)
-        intent.data = uri
-
-        startActivity(intent)
-    }
-
 }
