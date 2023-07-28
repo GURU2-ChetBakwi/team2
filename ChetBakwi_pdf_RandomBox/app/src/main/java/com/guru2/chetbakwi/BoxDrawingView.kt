@@ -11,12 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 
 class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView(context, attrs) {
-
     // 박스를 그리기 위한 Paint 객체
     private val boxPaint: Paint = Paint()
 
     // 페이지별로 생성된 박스들을 저장하는 리스트
     private val boxesByPage: MutableList<MutableList<RectF>> = mutableListOf()
+    private var currentPageIndex: Int = 0
 
     init {
         // 박스의 스타일과 두께, 색상 설정
@@ -35,7 +35,6 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
         }
     }
 
-    // 터치 이벤트 처리
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -48,20 +47,28 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
 
                 if (currentPageBoxes != null) {
                     // 이미 생성된 박스 중에서 선택한 박스가 있는지 확인
-                    val selectedBoxIndex = currentPageBoxes.indexOfFirst { it.contains(x, y) }
+                    var selectedBoxIndex = -1
+
+                    // 추가한 부분! 상자를 역순으로 반복(마지막 추가에서 처음으로)
+                    for (i in currentPageBoxes.size - 1 downTo 0) {
+                        if (currentPageBoxes[i].contains(x, y)) {
+                            selectedBoxIndex = i
+                            break // 최상위 상자를 찾은 후 break문으로 나가기
+                        }
+                    }
 
                     if (selectedBoxIndex != -1) {
                         // 선택한 박스가 있을 경우 해당 박스를 삭제
                         currentPageBoxes.removeAt(selectedBoxIndex)
                     } else {
                         // 새로운 박스 추가
-                        val box = RectF(x, y, x, y)
+                        val box = RectF(x, y, x + 100, y + 100) // Create a box with width and height of 100
                         currentPageBoxes.add(box)
                     }
                 } else {
                     // 현재 페이지에 대한 박스 리스트가 없을 경우 새로 생성
                     val newBoxesList = mutableListOf<RectF>()
-                    val box = RectF(x, y, x, y)
+                    val box = RectF(x, y, x + 100, y + 100) // Create a box with width and height of 100
                     newBoxesList.add(box)
                     boxesByPage.add(newBoxesList)
                 }
@@ -86,9 +93,6 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
         return true
     }
 
-    // 현재 페이지 인덱스
-    private var currentPageIndex: Int = 0
-
     // 현재 페이지 인덱스 설정
     fun setCurrentPageIndex(index: Int) {
         currentPageIndex = index
@@ -98,7 +102,7 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
     fun clearBoxes() {
         val currentPageBoxes = boxesByPage.getOrNull(currentPageIndex)
         if (currentPageBoxes != null && currentPageBoxes.isEmpty()) {
-            // 현재 페이지에 박스가 없을 때 토스트 알림 띄우기
+            // 박스들을 모두 지우고 화면을 다시 그리도록 호출하는 함수
             Toast.makeText(context, "이미 초기화 되었습니다.", Toast.LENGTH_SHORT).show()
         } else {
             currentPageBoxes?.clear()
@@ -113,7 +117,7 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
     }
 
     // 랜덤한 위치에 박스 생성하는 함수
-    fun addRandomBoxes() {
+    fun addRandomBoxes(count: Int) {
         val currentPageBoxes = boxesByPage.getOrNull(currentPageIndex)
         if (currentPageBoxes != null) {
             // 이전 박스들을 모두 제거
@@ -123,15 +127,15 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
             val pdfViewWidth = width.toFloat()
             val pdfViewHeight = height.toFloat()
 
-            // 10개의 랜덤한 박스 생성 (임의)
-            for (i in 1..10) {
+            // 입력된 개수만큼 랜덤한 박스 생성
+            for (i in 1..count) {
                 // 랜덤한 x, y 좌표를 생성
                 val randomX = (0..((pdfViewWidth - 100).toInt())).random().toFloat()
                 val randomY = (0..((pdfViewHeight - 20).toInt())).random().toFloat()
 
                 // 빨간색 박스 추가
                 val box = RectF(randomX, randomY, randomX + 100, randomY + 20)
-                boxPaint.color = Color.RED // 박스 색상을 빨간색으로 설정
+                boxPaint.color = Color.RED  // 박스 색상을 빨간색으로 설정
                 currentPageBoxes.add(box)
             }
 

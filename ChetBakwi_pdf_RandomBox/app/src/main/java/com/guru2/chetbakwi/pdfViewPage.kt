@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -30,7 +31,6 @@ import java.io.FileNotFoundException
 class pdfViewPage : AppCompatActivity() {
 
     private lateinit var pdfRenderer: PdfRenderer
-    // private lateinit var imageView: ImageView
     private lateinit var pdfFile: File
     private lateinit var currentPage: PdfRenderer.Page
 
@@ -40,6 +40,7 @@ class pdfViewPage : AppCompatActivity() {
     private lateinit var btnRandom: Button
     private lateinit var btnReset: Button
     private lateinit var pdfPageNumber: TextView
+    private lateinit var etRandomBoxCount: EditText
     private lateinit var boxDrawingView: BoxDrawingView
     private var currentPageIndex: Int = 0
     private lateinit var tesseract: TessBaseAPI
@@ -65,6 +66,7 @@ class pdfViewPage : AppCompatActivity() {
         btnNext = findViewById(R.id.btnNext)
         btnRandom = findViewById(R.id.btnRandom)
         btnReset = findViewById(R.id.btnReset)
+        etRandomBoxCount = findViewById(R.id.etRandomBoxCount)
         pdfPageNumber = findViewById(R.id.pdfPageNumber)
 
         // BoxDrawingView 초기화 및 연결
@@ -126,7 +128,18 @@ class pdfViewPage : AppCompatActivity() {
 
         // 빈칸 랜덤 생성 버튼 클릭 리스너
         btnRandom.setOnClickListener {
-            boxDrawingView.addRandomBoxes()
+            val countInput = etRandomBoxCount.text.toString()
+            if (countInput.isNotBlank()) {
+                val count = countInput.toIntOrNull()
+                if (count != null && count > 0) {
+                    // 사용자 입력에 기반하여 지정된 개수의 랜덤 박스 생성하는 함수 호출
+                    boxDrawingView.addRandomBoxes(count)
+                } else {
+                    Toast.makeText(this, "유효하지 않은 입력입니다. 유효한 숫자를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "숫자를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // 빈칸 랜덤 생성 버튼 클릭 리스너
