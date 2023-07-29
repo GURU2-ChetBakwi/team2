@@ -59,6 +59,13 @@ class pdfViewPage : AppCompatActivity() {
 
         // BoxDrawingView 초기화 및 연결
         boxDrawingView = findViewById(R.id.imageView)
+        val tvBoxCount: TextView = findViewById(R.id.tvBoxCount)
+        boxDrawingView.setTvBoxCount(tvBoxCount)
+
+        val pdfPageNumber: TextView = findViewById(R.id.pdfPageNumber)
+        val boxDrawingView: BoxDrawingView = findViewById(R.id.imageView)
+
+
 
         // tesseract 초기화
         initTesseract()
@@ -166,7 +173,9 @@ class pdfViewPage : AppCompatActivity() {
         if (currentPageIndex > 0) {
             currentPageIndex--
             boxDrawingView.setCurrentPageIndex(currentPageIndex)
+            boxDrawingView.clearRandomBoxes() // 페이지를 넘길 때 랜덤 박스 초기화
             showPage(currentPageIndex)
+            processOcrForCurrentPage()
         } else {
             // 첫 페이지이므로 이전 페이지 없음을 알림
             Toast.makeText(this, "첫 페이지입니다.", Toast.LENGTH_SHORT).show()
@@ -178,7 +187,9 @@ class pdfViewPage : AppCompatActivity() {
         if (currentPageIndex < pdfRenderer.pageCount - 1) {
             currentPageIndex++
             boxDrawingView.setCurrentPageIndex(currentPageIndex)
+            boxDrawingView.clearRandomBoxes() // 페이지를 넘길 때 랜덤 박스 초기화
             showPage(currentPageIndex)
+            processOcrForCurrentPage()
         } else {
             // 마지막 페이지이므로 다음 페이지 없음을 알림
             Toast.makeText(this, "마지막 페이지입니다.", Toast.LENGTH_SHORT).show()
