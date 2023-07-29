@@ -28,8 +28,9 @@
 
         <!-- 추가가 필요한 코드 / 화면 전환에 필요 -->
         <activity android:name=".pdfViewPage"/>
-        <activity android:name="ocrView_ex"/>
         <activity android:name="BoxDrawingView"/>
+        <activity android:name=".PdfViewOcr"/>
+        <activity android:name=".PdfViewPageForOcr"/>
     </application>
 
 </manifest>

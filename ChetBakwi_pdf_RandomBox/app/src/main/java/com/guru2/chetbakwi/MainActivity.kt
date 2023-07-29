@@ -303,7 +303,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ocrViewOpen(uri: Uri)  {
-        val intent = Intent(this, ocrView_ex::class.java)
+        val intent = Intent(this, PdfViewPageForOcr::class.java)
         intent.data = uri
 
         // Pass the state of the switch to ocrView_ex activity
