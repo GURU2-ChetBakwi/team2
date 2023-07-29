@@ -10,6 +10,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.random.Random
@@ -18,6 +19,10 @@ class PdfViewOcr : AppCompatActivity() {
     private lateinit var updatedSpannableString: SpannableString
     private lateinit var originalSpannableString: SpannableString
     private lateinit var text : String
+
+    // 메모 editText, 메모 초기화 버튼
+    private lateinit var editTextMemo: EditText
+    private lateinit var btnMemoReset: Button
 
     // 남은 빈칸 수 세는 텍스트뷰
     private lateinit var remainBlankTextView : TextView
@@ -47,6 +52,13 @@ class PdfViewOcr : AppCompatActivity() {
         btnToPdf = findViewById(R.id.btnToPdf)
         remainBlankTextView = findViewById(R.id.remainBlankTextView)
         btnRefresh = findViewById(R.id.btnRefresh)
+        editTextMemo = findViewById(R.id.editTextMemo)
+        btnMemoReset = findViewById(R.id.btnMemoReset)
+
+        // 메모 리셋 버튼 클릭 리스너 설정
+        btnMemoReset.setOnClickListener {
+            editTextMemo.setText("")
+        }
 
         // 초기 텍스트 설정
         originalSpannableString = SpannableString(text)

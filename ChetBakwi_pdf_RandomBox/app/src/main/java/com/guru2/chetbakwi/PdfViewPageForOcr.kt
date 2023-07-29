@@ -38,15 +38,6 @@ class PdfViewPageForOcr : AppCompatActivity() {
     private lateinit var tesseract: TessBaseAPI
     private lateinit var btnToOcr: Button
 
-    // 단어 좌표 정보를 담을 데이터 클래스
-    data class WordCoordinates(
-        val text: String,
-        val left: Int,
-        val top: Int,
-        val right: Int,
-        val bottom: Int
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdfviewocr)
