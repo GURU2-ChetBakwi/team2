@@ -57,12 +57,12 @@ class MainActivity : AppCompatActivity() {
                 //pdf 버튼 이름변경 !!!
                 updatePdfFile(uri!!)
             }
+            // firebase에 업로드
+            uploadPDFToFirebaseStorage(selectedPdfUri!!)
         }
 
     // pdf 파일 로컬에서 찾아오는 버튼
     lateinit var btnUpload: Button
-    // 저장된 pdf 파일을 열어보는 버튼
-    lateinit var btnOpen: Button
 
     //pdf 파일 firebase에서 찾아오는 버튼 !!!
     lateinit var btnPdf1: Button
@@ -134,8 +134,6 @@ class MainActivity : AppCompatActivity() {
 
         // pdf 파일 로컬에서 찾아오는 버튼
         btnUpload = findViewById<Button>(R.id.btnUpload)
-        // uri 로 저장된 pdf 파일을 열어보는 버튼
-        btnOpen = findViewById<Button>(R.id.btnOpen)
 
         //pdf 파일이름 버튼 !!!
         btnPdf1 = findViewById(R.id.pdfBtn1)
@@ -149,28 +147,8 @@ class MainActivity : AppCompatActivity() {
 
         // pdf 파일 찾아오는 버튼 클릭 시
         btnUpload.setOnClickListener {
-            // 로컬 파일 내에서 원하는 pdf 파일 선택하면 파일의 경로 반환
+            // 로컬 파일 내에서 원하는 pdf 파일 선택하면 파일의 경로 반환 + firebse에 업로드
             openFilePicker()
-        }
-
-        // pdf 파일을 여는 버튼 클릭 시
-        btnOpen.setOnClickListener {
-            //리스트 확인 코드
-            Log.e("!!!pdf",pdfList.toString())
-            Log.e("!!!pdfUri",pdfUriList.toString())
-
-            val selectedUri = selectedPdfUri ?: return@setOnClickListener
-
-            if (switchButton.isChecked) {
-                // 스위치 on -> ocrView 오픈
-                ocrViewOpen(selectedPdfUri!!)
-            } else {
-                // 스위치 off -> pdfView 오픈
-                pdfViewOpen(selectedPdfUri!!)
-            }
-
-            // firebase 에 저장 --------------------------------------------------------------->> 기능상 btnUpload.setOnClickListener로 옮겨야 할 함수
-            uploadPDFToFirebaseStorage(selectedPdfUri!!)
         }
 
         //버튼누르면 파일이름에 해당하는 열기 !!!
