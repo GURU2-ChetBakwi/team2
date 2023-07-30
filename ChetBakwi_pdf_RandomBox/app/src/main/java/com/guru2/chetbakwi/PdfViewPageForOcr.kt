@@ -78,7 +78,6 @@ class PdfViewPageForOcr : AppCompatActivity() {
             showPage(0)
             processOcrForCurrentPage()
 
-            //extractTextFromPDF(pdfUri)
         } else {
             // pdfUri 를 제대로 전달받지 못했다면 파일을 다시 선택하라는 alertDialog 띄우기
             val alertDialogBuilder = AlertDialog.Builder(this)
@@ -93,7 +92,6 @@ class PdfViewPageForOcr : AppCompatActivity() {
             alertDialog.show()
         }
 
-        //추가
         // 이전 페이지 버튼 클릭 리스너
         btnPrev.setOnClickListener {
             showPreviousPage()
@@ -169,52 +167,12 @@ class PdfViewPageForOcr : AppCompatActivity() {
         tesseract.init(cacheDir.absolutePath, "kor+eng")
     }
 
-    // pdf의 모든 페이지에 있는 텍스트 추출
-    private fun extractTextFromPDF(pdfUri: Uri) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val pdfText = withContext(Dispatchers.IO) {
-                try {
-                    // 읽기로 pdfuri 열기
-                    val pdfFileDescriptor: ParcelFileDescriptor? = contentResolver.openFileDescriptor(pdfUri, "r")
-                    if (pdfFileDescriptor != null) {
-                        // PDF에서 텍스트 추출
-                        val pdfTextBuilder = StringBuilder()
-                        val pdfRenderer = PdfRenderer(pdfFileDescriptor)
-                        // 첫번째 페이지부터 마지막 페이지까지
-                        for (pageIndex in 0 until pdfRenderer.pageCount) {
-                            // 페이지 열기
-                            val page = pdfRenderer.openPage(pageIndex)
-                            // 텍스트 추출
-                            val text = tesseractOCR(page)
-                            // textBulder에 append
-                            pdfTextBuilder.append(text)
-                            // 열어둔 페이지 닫기
-                            page.close()
-                        }
-                        // pdfRenderer 닫기
-                        pdfRenderer.close()
-                        pdfTextBuilder.toString()
-                    } else {
-                        "Error: Unable to open PDF file."
-                    }
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
-                    "Error: File not found."
-                }
-            }
-            // 추출된 pdfText print
-            println(pdfText)
-        }
-    }
-
     // 현재 보이고 있는 페이지에서 텍스트 추출
     private fun processOcrForCurrentPage() {
         GlobalScope.launch(Dispatchers.IO) {
             val pageText = withContext(Dispatchers.IO) {
                 tesseractOCR(currentPage)
             }
-            // 추출된 텍스트를 이용해 필요한 처리 ------------------------------------------------- 생략 가능
-            //println(pageText)
 
             btnToOcr.setOnClickListener {
                 //intent ocr 결과 주기
