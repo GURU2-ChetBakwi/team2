@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context=".pdfViewPage">
 
+    <Button
+        android:id="@+id/btnFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Button" />
+
     <com.guru2.chetbakwi.BoxDrawingView
         android:id="@+id/imageView"
         android:layout_width="match_parent"

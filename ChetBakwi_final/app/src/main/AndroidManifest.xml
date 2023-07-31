@@ -19,11 +19,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- 추가가 필요한 코드 / 화면 전환에 필요 -->
@@ -31,6 +27,16 @@
         <activity android:name="BoxDrawingView"/>
         <activity android:name=".PdfViewOcr"/>
         <activity android:name=".PdfViewPageForOcr"/>
+        <activity android:name=".Splash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
     </application>
 
 </manifest>

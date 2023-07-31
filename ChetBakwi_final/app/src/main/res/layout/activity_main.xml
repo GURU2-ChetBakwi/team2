@@ -48,6 +48,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pdfBtn2" />
 
+    <Button
+        android:id="@+id/pdfBtn5"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/btn_pdf"
+        android:fontFamily="@font/candybar"
+        android:text="pdf5"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pdfBtn4" />
+
+    <Button
+        android:id="@+id/pdfBtn4"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/btn_pdf"
+        android:fontFamily="@font/candybar"
+        android:text="pdf4"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pdfBtn3" />
+
     <Switch
         android:id="@+id/switchButton"
         android:layout_width="64dp"

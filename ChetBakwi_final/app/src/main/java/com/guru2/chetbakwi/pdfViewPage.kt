@@ -19,6 +19,7 @@ import java.io.FileOutputStream
 class pdfViewPage : AppCompatActivity() {
 
     // 변수 선언
+    private lateinit var btnFinish : Button
     private lateinit var pdfRenderer: PdfRenderer
     private lateinit var pdfFile: File
     private lateinit var currentPage: PdfRenderer.Page
@@ -44,6 +45,7 @@ class pdfViewPage : AppCompatActivity() {
         setContentView(R.layout.activity_pdfview)
 
         // 초기화 및 연결
+        btnFinish = findViewById(R.id.btnFinish)
         btnPrev = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
         btnRandom = findViewById(R.id.btnRandom)
@@ -55,6 +57,10 @@ class pdfViewPage : AppCompatActivity() {
         editTextMemo = findViewById(R.id.editTextMemo)
         btnMemoReset = findViewById(R.id.btnMemoReset2)
 
+        //학습 종료 버튼
+        btnFinish.setOnClickListener {
+            finish()
+        }
         // 메모 리셋 버튼 클릭 리스너 설정
         btnMemoReset.setOnClickListener {
             editTextMemo.setText("")
