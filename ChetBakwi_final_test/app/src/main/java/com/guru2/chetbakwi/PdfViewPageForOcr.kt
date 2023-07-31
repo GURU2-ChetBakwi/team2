@@ -170,19 +170,22 @@ class PdfViewPageForOcr : AppCompatActivity() {
     // 현재 보이고 있는 페이지에서 텍스트 추출
     private fun processOcrForCurrentPage() {
         GlobalScope.launch(Dispatchers.IO) {
+            // PDF 페이지에서 텍스트 추출
             val pageText = withContext(Dispatchers.IO) {
                 tesseractOCR(currentPage)
             }
 
             btnToOcr.setOnClickListener {
-                //intent ocr 결과 주기
+                // 추출된 텍스트를 PdfViewOcr로 전달
                 val intent = Intent(this@PdfViewPageForOcr, PdfViewOcr::class.java)
+                // 인식된 텍스트를 "textOCR"이라는 이름으로 인텐트에 추가
                 intent.putExtra("textOCR", pageText)
                 startActivity(intent)
             }
         }
     }
 
+    // Tesseract OCR을 사용하여 PDF 페이지에서 텍스트를 추출
     private fun tesseractOCR(page: PdfRenderer.Page): String {
         // pdf 페이지 너비, 높이 기반 비트맵 생성 (pdf -> img)
         val bitmap = Bitmap.createBitmap(page.width, page.height, Bitmap.Config.ARGB_8888)

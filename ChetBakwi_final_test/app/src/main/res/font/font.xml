@@ -3,4 +3,16 @@
     <font android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/candybar"/>
+
+    <font android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/nanumsquareround_b"/>
+
+    <font android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/nanumsquareround_eb"/>
+
+    <font android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/nanumsquareround_r"/>
 </font-family>

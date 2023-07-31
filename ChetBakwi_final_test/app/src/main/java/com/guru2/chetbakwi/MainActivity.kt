@@ -68,9 +68,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnPdf1: Button
     lateinit var btnPdf2: Button
     lateinit var btnPdf3: Button
-    lateinit var btnPdf4: Button
-    lateinit var btnPdf5: Button
-
 
     private lateinit var switchButton: Switch
     private lateinit var switchText: TextView
@@ -84,15 +81,15 @@ class MainActivity : AppCompatActivity() {
         switchText = findViewById(R.id.switchText)
 
         // Switch 상태를 기반으로 TextView의 초기 텍스트를 설정
-        switchText.text = if (switchButton.isChecked) "pdf" else "ocr"
+        switchText.text = if (switchButton.isChecked) "PDF 학습" else "TEXT 학습"
 
         // OnCheckedChangeListener를 설정하여 TextView의 텍스트를 동적으로 변경
         switchButton.setOnCheckedChangeListener { _, isChecked ->
-            switchText.text = if (isChecked) "pdf" else "ocr"
+            switchText.text = if (isChecked) "PDF 학습" else "TEXT 학습"
         }
 
         //Pdf List 설정 !!!
-        for(i in 1 until 6){
+        for(i in 1 until 4){
             pdfList.add("1")
             pdfUriList.add("1".toUri())
         }
@@ -142,15 +139,10 @@ class MainActivity : AppCompatActivity() {
         btnPdf1 = findViewById(R.id.pdfBtn1)
         btnPdf2 = findViewById(R.id.pdfBtn2)
         btnPdf3 = findViewById(R.id.pdfBtn3)
-        btnPdf4 = findViewById(R.id.pdfBtn4)
-        btnPdf5 = findViewById(R.id.pdfBtn5)
-
         //처음에는 안보이게 !!!
         btnPdf1.setVisibility(View.INVISIBLE)
         btnPdf2.setVisibility(View.INVISIBLE)
         btnPdf3.setVisibility(View.INVISIBLE)
-        btnPdf4.setVisibility(View.INVISIBLE)
-        btnPdf5.setVisibility(View.INVISIBLE)
 
 
         // pdf 파일 찾아오는 버튼 클릭 시
@@ -184,28 +176,6 @@ class MainActivity : AppCompatActivity() {
         }
         btnPdf3.setOnClickListener {
             val pdfs = 2
-            if(pdfList[pdfs]!="1"){
-                if((switchButton.isChecked)){
-                    downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
-                    pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
-                }
-            }
-        }
-        btnPdf4.setOnClickListener {
-            val pdfs = 3
-            if(pdfList[pdfs]!="1"){
-                if((switchButton.isChecked)){
-                    downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
-                    pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
-                }
-            }
-        }
-        btnPdf5.setOnClickListener {
-            val pdfs = 4
             if(pdfList[pdfs]!="1"){
                 if((switchButton.isChecked)){
                     downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
@@ -296,17 +266,8 @@ class MainActivity : AppCompatActivity() {
             btnPdf2.setVisibility(View.VISIBLE)
         }else if(pdfCount==2){
             btnPdf3.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
-            pdfCount ++
-            btnPdf3.setVisibility(View.VISIBLE)
-        }else if(pdfCount==3){
-            btnPdf4.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
-            pdfCount ++
-            btnPdf4.setVisibility(View.VISIBLE)
-        }
-        else if(pdfCount==4){
-            btnPdf5.setText(pdfList[pdfCount]) //파일이름으로 바꾸기
             pdfCount = 0
-            btnPdf5.setVisibility(View.VISIBLE)
+            btnPdf3.setVisibility(View.VISIBLE)
         }
     }
 

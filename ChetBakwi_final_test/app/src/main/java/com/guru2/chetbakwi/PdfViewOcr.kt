@@ -78,7 +78,7 @@ class PdfViewOcr : AppCompatActivity() {
                     toggleWord(widget as TextView, word, startIndex, endIndex)
                 }
                 override fun updateDrawState(ds: TextPaint) {
-                    // 클릭 가능한 링크의 스타일을 설정합니다.
+                    // 클릭 가능한 링크의 스타일을 설정
                     ds.isUnderlineText = false // 밑줄 제거
                     ds.color = Color.BLACK // 클릭 가능한 링크의 색상을 파란색으로 설정
                 }
