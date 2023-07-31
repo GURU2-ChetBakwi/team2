@@ -8,13 +8,6 @@
     android:orientation="vertical"
     tools:context=".pdfViewPage">
 
-    <Button
-        android:id="@+id/btnFinish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button" />
-
     <com.guru2.chetbakwi.BoxDrawingView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -34,13 +27,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:fontFamily="@font/candybar"
-            android:text="남은 빈칸 수 : " />
+            android:textColor="#7B5A5A"
+            android:fontFamily="@font/nanumsquareround_eb"
+            android:text="남은 빈칸 수 : "
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/btnReset"
-            android:layout_width="45dp"
-            android:layout_height="63dp"
+            android:layout_width="36dp"
+            android:layout_height="51dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_reset" />
@@ -57,17 +52,17 @@
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="7dp"
             android:backgroundTint="#187498"
-            android:fontFamily="@font/candybar"
+            android:fontFamily="@font/nanumsquareround_eb"
             android:hint="랜덤 박스 개수 입력"
             android:inputType="number"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnRandom"
-            android:layout_width="45dp"
-            android:layout_height="63dp"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_randomblank" />
@@ -96,18 +91,18 @@
                 android:layout_marginRight="15dp"
                 android:backgroundTint="#187498"
                 android:ems="10"
-                android:fontFamily="@font/candybar"
+                android:fontFamily="@font/nanumsquareround_eb"
                 android:hint="메모할 내용을 입력하세요"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minHeight="48dp"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
         </ScrollView>
 
         <Button
             android:id="@+id/btnMemoReset2"
-            android:layout_width="45dp"
-            android:layout_height="63dp"
+            android:layout_width="37dp"
+            android:layout_height="53dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/btn_erase"
             android:textSize="14sp"
@@ -137,9 +132,10 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="15dp"
-            android:fontFamily="@font/candybar"
+            android:fontFamily="@font/nanumsquareround_eb"
             android:gravity="center"
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:textColor="#7B5A5A"/>
 
         <Button
             android:id="@+id/btnNext"

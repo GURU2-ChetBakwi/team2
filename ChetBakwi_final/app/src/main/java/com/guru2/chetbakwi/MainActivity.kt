@@ -84,11 +84,11 @@ class MainActivity : AppCompatActivity() {
         switchText = findViewById(R.id.switchText)
 
         // Switch 상태를 기반으로 TextView의 초기 텍스트를 설정
-        switchText.text = if (switchButton.isChecked) "pdf" else "ocr"
+        switchText.text = if (switchButton.isChecked) "PDF 학습" else "TEXT 학습"
 
         // OnCheckedChangeListener를 설정하여 TextView의 텍스트를 동적으로 변경
         switchButton.setOnCheckedChangeListener { _, isChecked ->
-            switchText.text = if (isChecked) "pdf" else "ocr"
+            switchText.text = if (isChecked) "PDF 학습" else "TEXT 학습"
         }
 
         //Pdf List 설정 !!!
@@ -276,9 +276,6 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, pdfViewPage::class.java)
         intent.data = uri
-
-        // pdfViewPage로 넘어가기
-        startActivity(intent)
     }
 
     //pdf 버튼 파일이름 바꾸는 함수 !!!

@@ -19,7 +19,6 @@ import java.io.FileOutputStream
 class pdfViewPage : AppCompatActivity() {
 
     // 변수 선언
-    private lateinit var btnFinish : Button
     private lateinit var pdfRenderer: PdfRenderer
     private lateinit var pdfFile: File
     private lateinit var currentPage: PdfRenderer.Page
@@ -45,7 +44,6 @@ class pdfViewPage : AppCompatActivity() {
         setContentView(R.layout.activity_pdfview)
 
         // 초기화 및 연결
-        btnFinish = findViewById(R.id.btnFinish)
         btnPrev = findViewById(R.id.btnPrev)
         btnNext = findViewById(R.id.btnNext)
         btnRandom = findViewById(R.id.btnRandom)
@@ -57,10 +55,6 @@ class pdfViewPage : AppCompatActivity() {
         editTextMemo = findViewById(R.id.editTextMemo)
         btnMemoReset = findViewById(R.id.btnMemoReset2)
 
-        //학습 종료 버튼
-        btnFinish.setOnClickListener {
-            finish()
-        }
         // 메모 리셋 버튼 클릭 리스너 설정
         btnMemoReset.setOnClickListener {
             editTextMemo.setText("")
@@ -94,8 +88,6 @@ class pdfViewPage : AppCompatActivity() {
 
             // 첫 번째 페이지를 보여주기
             showPage(0)
-
-            //extractTextFromPDF(pdfUri)
         } else {
             // pdfUri 를 제대로 전달받지 못했다면 파일을 다시 선택하라는 alertDialog 띄우기
             val alertDialogBuilder = AlertDialog.Builder(this)
@@ -197,5 +189,10 @@ class pdfViewPage : AppCompatActivity() {
         // 액티비티가 종료될 때, 리소스를 정리
         currentPage.close()
         pdfRenderer.close()
+    }
+
+    //이전버튼 누르면 창 없어지기
+    override fun onBackPressed() {
+        finish()
     }
 }
