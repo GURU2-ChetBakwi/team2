@@ -85,29 +85,29 @@
         android:layout_width="64dp"
         android:layout_height="50dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginBottom="35dp"
         android:checked="true"
         android:gravity="center_vertical"
-        android:thumb="@drawable/ellipse15"
+        android:thumb="@drawable/ellipse15_new"
         android:track="@drawable/rectangle15"
         app:layout_constraintBottom_toTopOf="@+id/pdfBtn1"
-        app:layout_constraintEnd_toStartOf="@+id/switchText"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.45"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/switchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:fontFamily="@font/candybar"
         android:text="pdf"
         android:textColor="@android:color/black"
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="@+id/switchButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/switchButton" />
+        app:layout_constraintTop_toTopOf="@+id/switchButton"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="89dp" />
 
     <Button
         android:id="@+id/pdfBtn2"
