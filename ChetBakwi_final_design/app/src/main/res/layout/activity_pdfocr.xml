@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/btnRandomBlank"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
+        android:layout_width="45dp"
+        android:layout_height="63dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
@@ -46,8 +46,8 @@
 
     <Button
         android:id="@+id/btnToPdf"
-        android:layout_width="39dp"
-        android:layout_height="67dp"
+        android:layout_width="50dp"
+        android:layout_height="63dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/btn_viewpage"
@@ -60,10 +60,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        android:fontFamily="@font/nanumsquareround_eb"
         android:text="0"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="#7B5A5A"
+        android:fontFamily="@font/nanumsquareround_eb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
@@ -72,17 +72,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/nanumsquareround_eb"
         android:text="남은 빈칸 수 : "
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="#7B5A5A"
+        android:fontFamily="@font/nanumsquareround_eb"
         app:layout_constraintEnd_toStartOf="@+id/remainBlankTextView"
         app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
     <Button
         android:id="@+id/btnRefresh"
-        android:layout_width="36dp"
-        android:layout_height="51dp"
+        android:layout_width="45dp"
+        android:layout_height="63dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/btn_reset"
@@ -91,8 +91,8 @@
 
     <Button
         android:id="@+id/btnMemoReset"
-        android:layout_width="37dp"
-        android:layout_height="53dp"
+        android:layout_width="45dp"
+        android:layout_height="63dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/btn_erase"
