@@ -31,6 +31,10 @@ class pdfViewPage : AppCompatActivity() {
     private lateinit var etRandomBoxCount: EditText
     private lateinit var tvBoxCount: TextView
 
+    // 메모 editText, 메모 초기화 버튼
+    private lateinit var editTextMemo: EditText
+    private lateinit var btnMemoReset: Button
+
     private lateinit var boxDrawingView: BoxDrawingView
 
     private var currentPageIndex: Int = 0
@@ -47,6 +51,14 @@ class pdfViewPage : AppCompatActivity() {
         etRandomBoxCount = findViewById(R.id.etRandomBoxCount)
         pdfPageNumber = findViewById(R.id.pdfPageNumber)
         tvBoxCount = findViewById(R.id.tvBoxCount)
+
+        editTextMemo = findViewById(R.id.editTextMemo)
+        btnMemoReset = findViewById(R.id.btnMemoReset2)
+
+        // 메모 리셋 버튼 클릭 리스너 설정
+        btnMemoReset.setOnClickListener {
+            editTextMemo.setText("")
+        }
 
         // BoxDrawingView 초기화 및 연결
         boxDrawingView = findViewById(R.id.imageView)
