@@ -172,11 +172,11 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
         // 입력된 개수만큼 랜덤한 박스 생성
         for (i in 1..count) {
             // 랜덤한 x, y 좌표를 생성
-            var randomX = (0..((pdfViewWidth - 100).toInt())).random().toFloat()
+            var randomX = (0..((pdfViewWidth - 240).toInt())).random().toFloat() + 70f
             var randomY = (0..((pdfViewHeight - 620).toInt())).random().toFloat() + 300f
 
             // 새로운 박스 생성
-            val newBox = RectF(randomX, randomY, randomX + 100, randomY + 25)
+            val newBox = RectF(randomX, randomY, randomX + 100, randomY + 35)
             boxPaint.color = Color.parseColor("#FF6B6B") // 빨간색
 
             // 기존의 박스들과 겹치는지 확인
@@ -190,9 +190,9 @@ class BoxDrawingView(context: Context, attrs: AttributeSet) : AppCompatImageView
 
             // 겹치지 않을 때까지 다시 랜덤한 위치에 생성
             while (isOverlapping) {
-                randomX = (0..((pdfViewWidth - 100).toInt())).random().toFloat()
-                randomY = (0..((pdfViewHeight - 620).toInt())).random().toFloat() + 300f
-                newBox.set(randomX, randomY, randomX + 100, randomY + 25)
+                var randomX = (0..((pdfViewWidth - 240).toInt())).random().toFloat() + 70f
+                var randomY = (0..((pdfViewHeight - 620).toInt())).random().toFloat() + 300f
+                val newBox = RectF(randomX, randomY, randomX + 100, randomY + 35)
 
                 isOverlapping = false
                 for (box in currentPageRandomBoxes ?: emptyList()) {

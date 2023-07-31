@@ -84,11 +84,13 @@ class MainActivity : AppCompatActivity() {
         switchText = findViewById(R.id.switchText)
 
         // Switch 상태를 기반으로 TextView의 초기 텍스트를 설정
-        switchText.text = if (switchButton.isChecked) "PDF 학습" else "TEXT 학습"
+        //switchText.text = if (switchButton.isChecked) "PDF 학습" else "TEXT 학습"
+        switchText.text = if (switchButton.isChecked) "TEXT 학습" else "PDF 학습"
 
         // OnCheckedChangeListener를 설정하여 TextView의 텍스트를 동적으로 변경
         switchButton.setOnCheckedChangeListener { _, isChecked ->
-            switchText.text = if (isChecked) "PDF 학습" else "TEXT 학습"
+            //switchText.text = if (isChecked) "PDF 학습" else "TEXT 학습"
+            switchText.text = if (isChecked) "TEXT 학습" else "PDF 학습"
         }
 
         //Pdf List 설정 !!!
@@ -164,10 +166,13 @@ class MainActivity : AppCompatActivity() {
             val pdfs = 0
             if(pdfList[pdfs]!="1"){
                 if(switchButton.isChecked){
+                    //downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                    //pdfViewOpen(pdfUriList[pdfs])
+                    ocrViewOpen(pdfUriList[pdfs]!!)
+                } else {
+                    //ocrViewOpen(pdfUriList[pdfs]!!)
                     downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
                     pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
                 }
             }
         }
@@ -175,43 +180,55 @@ class MainActivity : AppCompatActivity() {
             val pdfs = 1
             if(pdfList[pdfs]!="1"){
                 if(switchButton.isChecked){
+                    //downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                    //pdfViewOpen(pdfUriList[pdfs])
+                    ocrViewOpen(pdfUriList[pdfs]!!)
+                } else {
+                    //ocrViewOpen(pdfUriList[pdfs]!!)
                     downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
                     pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
                 }
             }
         }
         btnPdf3.setOnClickListener {
             val pdfs = 2
             if(pdfList[pdfs]!="1"){
-                if((switchButton.isChecked)){
+                if(switchButton.isChecked){
+                    //downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                    //pdfViewOpen(pdfUriList[pdfs])
+                    ocrViewOpen(pdfUriList[pdfs]!!)
+                } else {
+                    //ocrViewOpen(pdfUriList[pdfs]!!)
                     downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
                     pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
                 }
             }
         }
         btnPdf4.setOnClickListener {
             val pdfs = 3
             if(pdfList[pdfs]!="1"){
-                if((switchButton.isChecked)){
+                if(switchButton.isChecked){
+                    //downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                    //pdfViewOpen(pdfUriList[pdfs])
+                    ocrViewOpen(pdfUriList[pdfs]!!)
+                } else {
+                    //ocrViewOpen(pdfUriList[pdfs]!!)
                     downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
                     pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
                 }
             }
         }
         btnPdf5.setOnClickListener {
             val pdfs = 4
             if(pdfList[pdfs]!="1"){
-                if((switchButton.isChecked)){
+                if(switchButton.isChecked){
+                    //downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
+                    //pdfViewOpen(pdfUriList[pdfs])
+                    ocrViewOpen(pdfUriList[pdfs]!!)
+                } else {
+                    //ocrViewOpen(pdfUriList[pdfs]!!)
                     downloadPDFToFirebaseStorage(pdfUriList[pdfs]!!)
                     pdfViewOpen(pdfUriList[pdfs])
-                } else {
-                    ocrViewOpen(pdfUriList[pdfs]!!)
                 }
             }
         }
