@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pdf_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".pdfViewPage">
+
+    <com.guru2.chetbakwi.BoxDrawingView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="447dp"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBoxCount"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="#7B5A5A"
+            android:fontFamily="@font/scdreambold"
+            android:text="남은 빈칸 수 : "
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="56dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_reset" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etRandomBoxCount"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="7dp"
+            android:backgroundTint="#187498"
+            android:fontFamily="@font/scdreambold"
+            android:hint="랜덤 박스 개수 입력"
+            android:inputType="number"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnRandom"
+            android:layout_width="54dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_randomblank" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnMemoReset"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView1">
+
+            <EditText
+                android:id="@+id/editTextMemo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="#187498"
+                android:ems="10"
+                android:fontFamily="@font/scdreambold"
+                android:hint="메모할 내용을 입력하세요"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minHeight="48dp"
+                android:textSize="18sp" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnMemoReset2"
+            android:layout_width="39dp"
+            android:layout_height="54dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/btn_erase"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPrev"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_prev" />
+
+        <TextView
+            android:id="@+id/pdfPageNumber"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/scdreambold"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#7B5A5A"/>
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_next" />
+    </LinearLayout>
+
+
+</LinearLayout>
